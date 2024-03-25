@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models *
+from .models import Quiz
 
 # Register your models here.
 

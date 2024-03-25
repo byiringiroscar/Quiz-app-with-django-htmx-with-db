@@ -93,12 +93,12 @@
 
     <p>Please pick a topic from the below topics</p>
 
-    <!-- <ol style="list-style-type: none;">
+    <ol style="list-style-type: none;">
 
       {% for topic in topics %}
       <li class="option">
         <input type="radio" id="topic-{{ forloop.counter0 }}" value="{{ topic.id }}" name="quiz_id" required>
-        <label for="topic-{{ forloop.counter0 }}">{{ topic.name }} ({{ topic.questions_count }} questions)</label>
+        <label for="topic-{{ forloop.counter0 }}">{{ topic.name }} (5questions)</label>
       </li>
       {% endfor %}
 
@@ -106,7 +106,7 @@
       <li>No topics available. Have you added topics into your database?</li>
       {% endif %}
 
-    </ol> -->
+    </ol>
 
     <button class="btn" type="submit">Start your quiz</button>
   </div>

@@ -3,12 +3,17 @@ from django.http import HttpResponse, HttpRequest
 from django.db.models import Count
 from django.core.paginator import Paginator
 from typing import Optional
+from .models import Quiz
 
 # Create your views here.
 
 
 
 def start_quiz_view(request) -> HttpResponse:
+  topics = Quiz.objects.all()
+  context = {
+    'topics': topics
+  }
   return render(
-    request, 'start.html'
+    request, 'start.html', context
   )
