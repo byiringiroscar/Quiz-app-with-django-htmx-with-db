@@ -3,7 +3,7 @@ from django.http import HttpResponse, HttpRequest
 from django.db.models import Count
 from django.core.paginator import Paginator
 from typing import Optional
-from .models import Quiz, Question
+from .models import Quiz, Question, Answer
 
 # Create your views here.
 
@@ -27,6 +27,15 @@ def get_questions(request, is_start=False) -> HttpResponse:
         question = _get_next_question(request)
         if question is None:
             return render(request, 'partials/finish.html')
+    
+    answers = Answer.objects.filter(question=question)
+    context = {
+        'question': question,
+        'answers': answers,
+        'username': username
+    }
+
+    return render(request, 'partials/question.html', context)
         
     
 
