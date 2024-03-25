@@ -3,7 +3,7 @@ from django.http import HttpResponse, HttpRequest
 from django.db.models import Count
 from django.core.paginator import Paginator
 from typing import Optional
-from .models import Quiz
+from .models import Quiz, Question
 
 # Create your views here.
 
@@ -17,3 +17,14 @@ def start_quiz_view(request) -> HttpResponse:
   return render(
     request, 'start.html', context
   )
+
+
+def get_questions(request, is_start=False) -> HttpResponse:
+  if is_start:
+    username = 'Anonymous'
+    question = _get_first_question(request)
+
+
+def _get_first_question(request) -> Question:
+  quiz_id = request.POST['quiz_id']
+  return Question.objects.filter(quiz_id=quiz_id, is_answered=False).first()
