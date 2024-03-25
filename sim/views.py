@@ -24,7 +24,11 @@ def get_questions(request, is_start=False) -> HttpResponse:
         username = 'Anonymous'
         question = _get_first_question(request)
     else:
-       question = _get_next_question(request)
+        question = _get_next_question(request)
+        if question is None:
+            return render(request, 'partials/finish.html')
+        
+    
 
 
 
