@@ -10,7 +10,7 @@ from .models import Quiz
 
 
 def start_quiz_view(request) -> HttpResponse:
-  topics = Quiz.objects.all()
+  topics = Quiz.objects.all().annotate(questions_count=Count('question'))
   context = {
     'topics': topics
   }

@@ -98,7 +98,7 @@
       {% for topic in topics %}
       <li class="option">
         <input type="radio" id="topic-{{ forloop.counter0 }}" value="{{ topic.id }}" name="quiz_id" required>
-        <label for="topic-{{ forloop.counter0 }}">{{ topic.name }} (5questions)</label>
+        <label for="topic-{{ forloop.counter0 }}">{{ topic.name }} ({{ topic.questions_count }} questions)</label>
       </li>
       {% endfor %}
 
