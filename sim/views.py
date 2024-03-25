@@ -39,10 +39,6 @@ def get_questions(request, is_start=False) -> HttpResponse:
         
     
 
-
-
-
-
 def _get_first_question(request) -> Question:
   quiz_id = request.POST['quiz_id']
   return Question.objects.filter(quiz_id=quiz_id, is_answered=False).first()
@@ -57,3 +53,14 @@ def _get_next_question(request) -> Optional[Question]:
         return None
     except Question.DoesNotExist:
         return None
+    
+
+
+def get_answer(request) -> HttpResponse:
+    submitted_answer_id = request.POST['answer_id']
+    submitted_answer = Answer.objects.get(id=submitted_answer_id)
+    submitted_answer.question.is_answered = True
+    submitted_answer.question.save()
+
+    if submitted_answer.is_correct:
+        response = 'Correct!'
