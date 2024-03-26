@@ -98,12 +98,20 @@
       background-color: #e0e0e0;
 
     }
+    .user-log{
+      position: absolute;
+      font-size: 20px;
+      font-weight: bold;
+      top: 20px;
+      left: 20px;
+    }
   </style>
 </head>
 <body>
 
 <div  id="content-container">
   <a class="logout" href="{% url 'logout' %}">Logout</a>
+  <p class="user-log">Welcome: {{ user.username }}!</p>
   
   <form id="topic-container" method="post" hx-post="{% url 'get-questions' %}/start">
     <div style="width: 100%; display: flex; align-items: center; justify-content: center;">

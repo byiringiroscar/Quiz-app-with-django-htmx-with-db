@@ -51,9 +51,11 @@ def logout_view(request):
 
 @login_required
 def start_quiz_view(request) -> HttpResponse:
+  user = request.user
   topics = Quiz.objects.all().annotate(questions_count=Count('question'))
   context = {
-    'topics': topics
+    'topics': topics,
+    'user': user,
   }
   return render(
     request, 'start.html', context
@@ -110,7 +112,8 @@ def get_answer(request) -> HttpResponse:
     user = request.user
     submitted_answer_id = request.POST['answer_id']
     submitted_answer = Answer.objects.get(id=submitted_answer_id)
-    quiz_complete_attempt, created = QuizCompletionAttempt.objects.get_or_create(user=user, is_completed=False)
+    quiz = submitted_answer.question.quiz
+    quiz_complete_attempt, created = QuizCompletionAttempt.objects.get_or_create(user=user, quiz=quiz, is_completed=False)
     result_record, created = ResultRecord.objects.get_or_create(quiz_attempt=quiz_complete_attempt, user=user)
     answer_correct = False
     if submitted_answer.is_correct:
