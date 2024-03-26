@@ -88,11 +88,9 @@
 <div  id="topic-container">
     <img src="{% static 'error.gif' %}" alt="profile" style="width: 70%; height: 300px; border-radius: 50%; display: block; margin: auto;">
     <h3>Sorry no question available or some question not have answer</h3>
-    <form hx-get="{% url 'start' %}" hx-target="#content-container">
-        <button class="btn" type="submit">
-            Start another quiz
-        </button>
-    </form>
+    <a class="btn" style="display: flex; justify-content: center; align-items: center;" href="{% url 'start' %}">
+        Start another quiz
+      </a>
 </div>
 </body>
 </html>
