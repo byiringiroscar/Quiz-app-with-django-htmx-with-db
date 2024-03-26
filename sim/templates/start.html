@@ -84,7 +84,7 @@
 </head>
 <body>
 
-<form id="topic-container" hx-post="{% url 'get-questions' %}/start">
+<form id="topic-container" method="post" hx-post="{% url 'get-questions' %}/start">
   {% csrf_token %}
   <h2 id="heading-text">
     What would you like to learn about?

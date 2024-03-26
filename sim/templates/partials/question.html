@@ -2,7 +2,7 @@
 
 <div>
 
-    <form id="question-form" hx-post="{% url 'get-answer' %}">
+    <form id="question-form"  hx-post="{% url 'get-answer' %}">
       {% csrf_token %}
   
       <h2 id="heading-text">
