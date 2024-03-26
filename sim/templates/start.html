@@ -80,12 +80,35 @@
     .btn:hover {
       background-color: #0056b3;
     }
+
+    .logout{
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      text-decoration: none;
+      color: #333;
+      background-color: #f0f0f0;
+      padding: 10px 20px;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+      transition: background-color 0.3s;
+    }
+
+    .logout:hover{
+      background-color: #e0e0e0;
+
+    }
   </style>
 </head>
 <body>
 
 <div  id="content-container">
+  <a class="logout" href="{% url 'logout' %}">Logout</a>
+  
   <form id="topic-container" method="post" hx-post="{% url 'get-questions' %}/start">
+    <div style="width: 100%; display: flex; align-items: center; justify-content: center;">
+      <a class="btn" style="" href="">View Records</a>
+    </div>
     {% csrf_token %}
     <h2 id="heading-text">
       What would you like to learn about?
