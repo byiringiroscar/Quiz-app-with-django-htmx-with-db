@@ -69,7 +69,7 @@ class ResultIndividual(models.Model):
     is_correct = models.BooleanField(default=False)
 
     def __str__(self):
-        return f'{self.result_record.username} - {self.quiz} - {self.question[:20]}'
+        return f'{self.result_record} - {self.quiz} - {self.question[:20]}'
     
 
 
