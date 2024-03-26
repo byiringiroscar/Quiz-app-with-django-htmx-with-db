@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from django.http import HttpResponse, HttpRequest
+from django.http import HttpResponse, HttpRequest, HttpResponseBadRequest
 from django.db.models import Count
 from django.core.paginator import Paginator
 from typing import Optional
@@ -64,6 +64,8 @@ def start_quiz_view(request) -> HttpResponse:
 @login_required
 def get_questions(request, is_start=False) -> HttpResponse:
     quiz_id = request.POST['quiz_id']
+    if not quiz_id:
+        return HttpResponseBadRequest('Please select a quiz topic.')
     quiz_completion_attempt, created = QuizCompletionAttempt.objects.get_or_create(
         quiz_id=quiz_id, user=request.user, is_completed=False
     )
@@ -111,6 +113,8 @@ def _get_next_question(request, quiz_completion_attempt) -> Optional[Question]:
 def get_answer(request) -> HttpResponse:
     user = request.user
     submitted_answer_id = request.POST['answer_id']
+    if not submitted_answer_id:
+        return HttpResponseBadRequest('Please select an answer.')
     submitted_answer = Answer.objects.get(id=submitted_answer_id)
     quiz = submitted_answer.question.quiz
     quiz_complete_attempt, created = QuizCompletionAttempt.objects.get_or_create(user=user, quiz=quiz, is_completed=False)
