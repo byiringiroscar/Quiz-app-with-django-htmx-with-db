@@ -1,10 +1,6 @@
 <div>
     <p>Quiz complete. You scored {{ percent_score }}%</p>
     <p>({{ score }} correct / {{ questions_count }} questions)</p>
-  
-    <!-- <a class="btn" href="{% url 'start' %}">
-      Start another quiz
-    </a> -->
     <form hx-get="{% url 'start' %}" hx-target="#content-container">
         <button class="btn" type="submit">
             Start another quiz
