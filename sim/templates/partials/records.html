@@ -22,17 +22,18 @@
 </head>
 <body>
     <div class="container-quiz">
-        {% for i in '12' %}
+        {% for quiz_comple in quiz_completion_attempts %}
         <div class="records">
-            <h1>Quiz title: </h1>
-            <h2>Score: </h2>
+            <h1>Quiz title: {{ quiz_comple.quiz.name }}</h1>
+            <h2>Score: {{ quiz_comple.result_records_user.score }}/ {{ quiz_comple.get_total_questions }}</h2>
+            <h3>Percentage: {{ quiz_comple.get_percentage_score }}%</h3>
             <div class="record-stat">
-                {% for i in '1234' %}
-                <div class="record">
-                    <h3>Question: </h3>
-                    <h3>Answers: <span>ok</span></h3>
-                    <h3>Actual Answer: </h3>
-                </div>
+                {% for record in quiz_comple.result_records_user.get_individual_result %}
+                <ul class="record">
+                    <li>Question({{ forloop.counter }}): {{ record.question }}</li>
+                    <li>Answers: {{ record.answer }}- {% if record.is_correct %}<span style="color: green; font-weight: bold;">correct</span>{% else %}<span style="color: rgb(87, 7, 7); font-weight: bold;">incorrect</span>{% endif %}</li>
+                    <li style="color: green; font-weight: bold;">Actual Answer: {{ record.correct_answer }}</li>
+                </ul>
                 {% endfor %}
             </div>
         </div>

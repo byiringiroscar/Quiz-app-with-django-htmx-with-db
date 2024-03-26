@@ -43,7 +43,16 @@ class QuizCompletionAttempt(models.Model):
 
 
     def result_records_user(self):
-        return ResultRecord.objects.filter(quiz_attempt=self, user=self.user)
+        return ResultRecord.objects.filter(quiz_attempt=self, user=self.user).first()
+    
+    def get_total_questions(self):
+        return Question.objects.filter(quiz=self.quiz).count()
+    
+
+    def get_percentage_score(self):
+        total_questions = self.get_total_questions()
+        score = self.result_records_user().score
+        return int(score / total_questions * 100)
 
 
   
