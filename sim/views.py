@@ -25,6 +25,13 @@ def get_questions(request, is_start=False) -> HttpResponse:
     quiz_completion_attempt, created = QuizCompletionAttempt.objects.get_or_create(
         quiz_id=quiz_id, user=request.user, is_completed=False
     )
+    if not Question.objects.filter(quiz_id=quiz_id).exists():
+        return handle_question_error(request)
+    
+    # Check if every question in the quiz has at least one answer
+    questions_with_no_answers = Question.objects.filter(quiz_id=quiz_id).exclude(answer__isnull=False).distinct()
+    if questions_with_no_answers.exists():
+        return handle_question_error(request)
     if is_start:
         question = _get_first_question(request, quiz_completion_attempt)
     else:

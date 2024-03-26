@@ -17,9 +17,8 @@ class Question(models.Model):
   quiz = models.ForeignKey(Quiz, on_delete=models.CASCADE)
   text = models.CharField(max_length=250)
 
-
 def __str__(self):
-    return f'{self.quiz} - {self.text}'
+    return f'{self.quiz.name} - {self.text[:20]}'
 
 
 class Answer(models.Model):
