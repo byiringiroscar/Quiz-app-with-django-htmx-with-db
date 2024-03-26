@@ -6,4 +6,5 @@ urlpatterns = [
   path('get-questions/start', views.get_questions, {'is_start': True}, name='get-questions'),
   path('get-questions', views.get_questions, {'is_start': False}, name='get-questions'),
   path('get-answer', views.get_answer, name='get-answer'),
+  path('error', views.handle_question_error, name='error'),
 ]

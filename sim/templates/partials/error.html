@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+    {% load static %}
 <head>
   <meta charset="UTF-8">
   <title>Start your quiz </title>
@@ -85,6 +86,7 @@
 <body>
 
 <div  id="topic-container">
+    <img src="{% static 'error.gif' %}" alt="profile" style="width: 70%; height: 300px; border-radius: 50%; display: block; margin: auto;">
     <h3>Sorry no question available or some question not have answer</h3>
 </div>
 </body>

@@ -112,3 +112,8 @@ def get_finish(request, quiz_completion_attempt) -> HttpResponse:
             'questions_count': question_count, 'score': score, 'percent_score': percent
         }
     return render(request, 'partials/finish.html', context) 
+
+
+
+def handle_question_error(request) -> HttpResponse:
+    return render(request, 'partials/error.html')
