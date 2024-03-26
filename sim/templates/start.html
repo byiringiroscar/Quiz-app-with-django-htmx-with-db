@@ -107,7 +107,7 @@
   
   <form id="topic-container" method="post" hx-post="{% url 'get-questions' %}/start">
     <div style="width: 100%; display: flex; align-items: center; justify-content: center;">
-      <a class="btn" style="text-decoration: none;" href="">View Records</a>
+      <a class="btn" style="text-decoration: none;" href="{% url 'view_records' %}">View Records</a>
     </div>
     {% csrf_token %}
     <h2 id="heading-text">

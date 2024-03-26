@@ -18,10 +18,28 @@
                 height: 1px;
                 background-color: black;
             }
+            .logout{
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      text-decoration: none;
+      color: #333;
+      background-color: #f0f0f0;
+      padding: 10px 20px;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+      transition: background-color 0.3s;
+    }
+
+    .logout:hover{
+      background-color: #e0e0e0;
+
+    }
     </style>
 </head>
 <body>
     <div class="container-quiz">
+        <a class="logout" href="{% url 'start' %}">Home</a>
         {% for quiz_comple in quiz_completion_attempts %}
         <div class="records">
             <h1>Quiz title: {{ quiz_comple.quiz.name }}</h1>
