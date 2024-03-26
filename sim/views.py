@@ -63,8 +63,11 @@ def start_quiz_view(request) -> HttpResponse:
 
 @login_required
 def get_questions(request, is_start=False) -> HttpResponse:
-    quiz_id = request.POST['quiz_id']
-    if not quiz_id:
+    try:
+        quiz_id = request.POST['quiz_id']
+        if not quiz_id:
+            return HttpResponseBadRequest('Please select a quiz topic.')
+    except:
         return HttpResponseBadRequest('Please select a quiz topic.')
     quiz_completion_attempt, created = QuizCompletionAttempt.objects.get_or_create(
         quiz_id=quiz_id, user=request.user, is_completed=False
@@ -112,9 +115,12 @@ def _get_next_question(request, quiz_completion_attempt) -> Optional[Question]:
 @login_required
 def get_answer(request) -> HttpResponse:
     user = request.user
-    submitted_answer_id = request.POST['answer_id']
-    if not submitted_answer_id:
-        return HttpResponseBadRequest('Please select an answer.')
+    try:
+        submitted_answer_id = request.POST['answer_id']
+        if not submitted_answer_id:
+            return HttpResponseBadRequest('Please select an answer.')
+    except:
+        return HttpResponseBadRequest('Please select an answer.')   
     submitted_answer = Answer.objects.get(id=submitted_answer_id)
     quiz = submitted_answer.question.quiz
     quiz_complete_attempt, created = QuizCompletionAttempt.objects.get_or_create(user=user, quiz=quiz, is_completed=False)
