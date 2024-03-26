@@ -39,6 +39,13 @@ class QuizCompletionAttempt(models.Model):
 
     def __str__(self):
         return f'{self.quiz.name} - {self.user}'
+    
+
+
+    def result_records_user(self):
+        return ResultRecord.objects.filter(quiz_attempt=self, user=self.user)
+
+
   
 
 class QuestionAttempt(models.Model):
@@ -57,6 +64,10 @@ class ResultRecord(models.Model):
 
     def __str__(self):
         return f'{self.user.username} - {self.quiz_attempt.quiz} - {self.score}'
+    
+    def get_individual_result(self):
+        return ResultIndividual.objects.filter(result_record=self)
+       
     
 
 class ResultIndividual(models.Model):

@@ -161,6 +161,16 @@ def get_finish(request, quiz_completion_attempt) -> HttpResponse:
     return render(request, 'partials/finish.html', context) 
 
 
-
+@login_required
 def handle_question_error(request) -> HttpResponse:
     return render(request, 'partials/error.html')
+
+
+@login_required
+def view_records(request):
+    user = request.user
+    quiz_completion_attempts = QuizCompletionAttempt.objects.filter(user=user)
+    context = {
+        'quiz_completion_attempts': quiz_completion_attempts
+    }
+    return render(request, 'partials/records.html', context)
