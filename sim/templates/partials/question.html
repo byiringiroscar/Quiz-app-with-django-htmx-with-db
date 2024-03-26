@@ -18,12 +18,34 @@
         {% endfor %}
       </ol>
   
-      <button class="btn" type="submit" >
+      <button class="btn" type="submit" onclick="return validateAnswerSelection()">
         Submit your answer
       </button>
   
     </form>
   </div>
+
+
+  <script>
+    function validateAnswerSelection() {
+      const answerRadioButtons = document.querySelectorAll('input[name="answer_id"]');
+      let isSelected = false;
+    
+      for (const radioButton of answerRadioButtons) {
+        if (radioButton.checked) {
+          isSelected = true;
+          break;
+        }
+      }
+    
+      if (!isSelected) {
+        alert("Please select an answer to submit.");
+        return false; // Prevent form submission
+      }
+    
+      return true; // Allow form submission if an answer is selected
+    }
+    </script>
   
   <script>
     window.onbeforeunload = function(){

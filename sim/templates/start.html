@@ -140,12 +140,32 @@
   
       </ol>
   
-      <button class="btn" type="submit">Start your quiz</button>
+      <button class="btn" type="submit" onclick="return validateQuizSelection()">Start your quiz</button>
     </div>
   </form>
 </div>
 
-
+<script>
+  function validateQuizSelection() {
+    const quizRadioButtons = document.querySelectorAll('input[name="quiz_id"]');
+    let isSelected = false;
+  
+    for (const radioButton of quizRadioButtons) {
+      if (radioButton.checked) {
+        isSelected = true;
+        break;
+      }
+    }
+  
+    if (!isSelected) {
+      // Display user-friendly message (consider using HTMX for partial updates)
+      alert("Please select a quiz topic to begin.");
+      return false; // Prevent form submission
+    }
+  
+    return true; // Allow form submission if a quiz is selected
+  }
+  </script>
 
 </body>
 </html>
