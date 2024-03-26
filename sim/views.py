@@ -3,7 +3,7 @@ from django.http import HttpResponse, HttpRequest
 from django.db.models import Count
 from django.core.paginator import Paginator
 from typing import Optional
-from .models import Quiz, Question, Answer, QuizCompletionAttempt, ResultRecord, ResultIndividual
+from .models import Quiz, Question, Answer, QuizCompletionAttempt, ResultRecord, ResultIndividual, QuestionAttempt
 from django.contrib.auth.decorators import login_required
 
 # Create your views here.
@@ -28,9 +28,9 @@ def get_questions(request, is_start=False) -> HttpResponse:
     if is_start:
         question = _get_first_question(request, quiz_completion_attempt)
     else:
-        question = _get_next_question(request)
+        question = _get_next_question(request, quiz_completion_attempt)
         if question is None:
-            return render(request, 'partials/finish.html')
+            return get_finish(request, quiz_completion_attempt)
     
     answers = Answer.objects.filter(question=question)
     context = {
@@ -47,9 +47,9 @@ def _get_first_question(request, quiz_completion_attempt) -> Question:
   return Question.objects.exclude(questionattempt__quiz_attempt=quiz_completion_attempt, questionattempt__is_answered=True).filter(quiz_id=quiz_id).first()
 
 @login_required
-def _get_next_question(request) -> Optional[Question]:
+def _get_next_question(request, quiz_completion_attempt) -> Optional[Question]:
     quiz_id = request.POST['quiz_id']
-    next_question = Question.objects.filter(quiz_id=quiz_id, is_answered=False).first()
+    next_question = Question.objects.exclude(questionattempt__quiz_attempt=quiz_completion_attempt, questionattempt__is_answered=True).filter(quiz_id=quiz_id).first()
     try:
         if next_question:
             return next_question
@@ -86,6 +86,11 @@ def get_answer(request) -> HttpResponse:
         is_correct=answer_correct,
     
     )
+    QuestionAttempt.objects.create(
+        quiz_attempt=quiz_complete_attempt,
+        question=submitted_answer.question,
+        is_answered=True
+    )
 
     context={
       'submitted_answer': submitted_answer,
@@ -95,3 +100,15 @@ def get_answer(request) -> HttpResponse:
     return render(request, 'partials/answer.html', context)
 
 
+@login_required
+def get_finish(request, quiz_completion_attempt) -> HttpResponse:
+    quiz_completion_attempt.is_completed = True
+    quiz_completion_attempt.save()
+    question_count = Question.objects.filter(quiz=quiz_completion_attempt.quiz).count()
+    score = ResultRecord.objects.get(quiz_attempt=quiz_completion_attempt).score
+    percent = float(score / question_count) * 100
+    percent = int(percent)
+    context={
+            'questions_count': question_count, 'score': score, 'percent_score': percent
+        }
+    return render(request, 'partials/finish.html', context) 

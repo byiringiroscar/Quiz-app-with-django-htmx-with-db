@@ -57,7 +57,7 @@ class ResultRecord(models.Model):
     date_time = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return f'{self.username} - {self.quiz} - {self.score}'
+        return f'{self.user.username} - {self.quiz_attempt.quiz} - {self.score}'
     
 
 class ResultIndividual(models.Model):

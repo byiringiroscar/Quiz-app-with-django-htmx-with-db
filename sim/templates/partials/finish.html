@@ -1,11 +1,14 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
-    <h2>Test ended</h2>
-</body>
-</html>
+<div>
+    <p>Quiz complete. You scored {{ percent_score }}%</p>
+    <p>({{ score }} correct / {{ questions_count }} questions)</p>
+  
+    <!-- <a class="btn" href="{% url 'start' %}">
+      Start another quiz
+    </a> -->
+    <form hx-get="{% url 'start' %}" hx-target="#content-container">
+        <button class="btn" type="submit">
+            Start another quiz
+        </button>
+    </form>
+  </div>
+  
