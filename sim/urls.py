@@ -7,4 +7,9 @@ urlpatterns = [
   path('get-questions', views.get_questions, {'is_start': False}, name='get-questions'),
   path('get-answer', views.get_answer, name='get-answer'),
   path('error', views.handle_question_error, name='error'),
+
+#   authentication routes
+ path('signup/', views.signup_view, name='signup'),
+ path('login/', views.login_view, name='login'),
+
 ]
