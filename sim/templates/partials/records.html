@@ -40,23 +40,27 @@
 <body>
     <div class="container-quiz">
         <a class="logout" href="{% url 'start' %}">Home</a>
-        {% for quiz_comple in quiz_completion_attempts %}
-        <div class="records">
-            <h1>Quiz title: {{ quiz_comple.quiz.name }}</h1>
-            <h2>Score: {{ quiz_comple.result_records_user.score }}/ {{ quiz_comple.get_total_questions }}</h2>
-            <h3>Percentage: {{ quiz_comple.get_percentage_score }}%</h3>
-            <div class="record-stat">
-                {% for record in quiz_comple.result_records_user.get_individual_result %}
-                <ul class="record">
-                    <li>Question({{ forloop.counter }}): {{ record.question }}</li>
-                    <li>Answers: {{ record.answer }}- {% if record.is_correct %}<span style="color: green; font-weight: bold;">correct</span>{% else %}<span style="color: rgb(87, 7, 7); font-weight: bold;">incorrect</span>{% endif %}</li>
-                    <li style="color: green; font-weight: bold;">Actual Answer: {{ record.correct_answer }}</li>
-                </ul>
-                {% endfor %}
+        {% if quiz_completion_attempts %}
+            {% for quiz_comple in quiz_completion_attempts %}
+            <div class="records">
+                <h1>Quiz title: {{ quiz_comple.quiz.name }}</h1>
+                <h2>Score: {{ quiz_comple.result_records_user.score }}/ {{ quiz_comple.get_total_questions }}</h2>
+                <h3>Percentage: {{ quiz_comple.get_percentage_score }}%</h3>
+                <div class="record-stat">
+                    {% for record in quiz_comple.result_records_user.get_individual_result %}
+                    <ul class="record">
+                        <li>Question({{ forloop.counter }}): {{ record.question }}</li>
+                        <li>Answers: {{ record.answer }}- {% if record.is_correct %}<span style="color: green; font-weight: bold;">correct</span>{% else %}<span style="color: rgb(87, 7, 7); font-weight: bold;">incorrect</span>{% endif %}</li>
+                        <li style="color: green; font-weight: bold;">Actual Answer: {{ record.correct_answer }}</li>
+                    </ul>
+                    {% endfor %}
+                </div>
             </div>
-        </div>
-        <hr class="line-separate" />
-        {% endfor %}
+            <hr class="line-separate" />
+            {% endfor %}
+        {% else %}
+            <h1>No records available</h1>
+        {% endif %}
     </div>
     
 </body>
